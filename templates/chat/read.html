@@ -1,0 +1,63 @@
+{% extends "chat/base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block subtitle %}Read and reply to the message{% endblock %}
+
+{% block content %}
+
+<div class="col-md-12">
+    {% for message in messages %}
+        <div class="card mb-4 box-shadow">
+            <div class="card-body">
+                <p class="card-text">{{ message.message }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted">Sent at {{ message.created_at|date:"F d, Y, P" }}</small>
+                </div>
+            </div>
+        </div>
+
+        {% for reply in message.reply_set.all %}
+            <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                    <p class="card-text">{{ reply.text }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted">
+                            Replied by: {{ reply.author.username }} at {{ reply.created_at|date:"F d, Y, P" }}
+                        </small>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+</div>
+
+
+{% if can_reply %}
+<div class="card mb-4 box-shadow">
+    <div class="card-body">
+        <h4>Reply</h4>
+        <div>
+            <form class="post-form" method="POST">
+                {% csrf_token %}
+                {{ form.text.label_tag }} {# Render the label #}
+                {{ form.text }} {# Render the text input field #}
+
+                {% if form.errors %}
+                <div class="alert alert-danger">
+                    <strong>Error:</strong>
+                    <ul>
+                        {% for error in form.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                <button class="save btn btn-default" type="submit">Reply</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

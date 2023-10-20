@@ -1,0 +1,517 @@
+/*--------------------------------------------------------------
+>>> TABLE OF CONTENTS:
+----------------------------------------------------------------
+# Document Setup
+# Clearing
+# Base Transitions
+# Forms
+# Accessibility
+# Alignments
+# Widgets
+# Content
+	## Posts and pages
+	## Comments
+# Infinite scroll
+# Media
+	## Captions
+	## Galleries
+# Header Menu Issue with Admin Bar
+--------------------------------------------------------------*/
+/*--------------------------------------------------------------
+# Document Setup
+--------------------------------------------------------------*/
+body {
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color1: #32c36c;
+  --primary-color2: #f9395f;
+  --primary-color3: #029e7c;
+
+  --font-primary: "Saira", sans-serif;
+  --font-secondary: "Quicksand", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  -webkit-font-smoothing: antialiased;
+  word-break: break-word;
+  word-wrap: break-word;
+}
+
+table * {
+  word-break: initial;
+}
+
+#site-content {
+  overflow: hidden;
+}
+
+.page-wrapper .inner-post table th,
+.blog-wrapper .blog-details table th,
+.blog-comment-form table th {
+  color: #00274e;
+}
+
+/*--------------------------------------------------------------
+  # Default Set Menu Text 
+  --------------------------------------------------------------*/
+header .set-menu {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+header .set-menu h4 a {
+  color: #000;
+}
+
+header .set-menu h4 {
+  margin: 0;
+}
+
+@media (max-width: 1199px) {
+  header .set-menu h4 {
+    margin-top: 25px;
+  }
+}
+
+/*--------------------------------------------------------------
+  # Clearing
+  --------------------------------------------------------------*/
+
+.group::after,
+.entry-content::after {
+  clear: both;
+  content: "";
+  display: block;
+}
+
+/*--------------------------------------------------------------
+  # Base Transitions
+  --------------------------------------------------------------*/
+
+a,
+path {
+  transition: all 0.15s linear;
+}
+
+/*--------------------------------------------------------------
+  # Accessibility
+  --------------------------------------------------------------*/
+.screen-reader-text {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute !important;
+  width: 1px;
+  word-wrap: normal !important;
+}
+
+.screen-reader-text:focus {
+  background-color: #f1f1f1;
+  border-radius: 3px;
+  box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
+  clip: auto !important;
+  -webkit-clip-path: none;
+  clip-path: none;
+  color: var(--primary_color);
+  display: block;
+  font-size: 14px;
+  font-size: 0.875rem;
+  font-weight: bold;
+  height: auto;
+  left: 5px;
+  line-height: normal;
+  padding: 15px 23px 14px;
+  text-decoration: none;
+  top: 5px;
+  width: auto;
+  z-index: 100000;
+}
+
+#content[tabindex="-1"]:focus {
+  outline: 0;
+}
+
+/*--------------------------------------------------------------
+  # Alignments
+  --------------------------------------------------------------*/
+.alignleft {
+  float: left;
+  margin-right: 2em;
+}
+
+.alignright {
+  float: right;
+  margin-left: 2em;
+}
+
+.aligncenter {
+  clear: both;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*--------------------------------------------------------------
+  # Widgets
+  --------------------------------------------------------------*/
+
+.widget select {
+  max-width: 100%;
+}
+
+/*--------------------------------------------------------------
+  ## Posts and pages
+  --------------------------------------------------------------*/
+.sticky {
+  display: block;
+}
+
+.updated:not(.published) {
+  display: none;
+}
+
+.page-wrapper .inner-post:after,
+.entry-content:after,
+.entry-summary:after,
+.blog-details .blog-content::after {
+  clear: both;
+  content: "";
+  display: block;
+}
+
+.page-links {
+  clear: both;
+  margin: 0 0 1.5em;
+}
+
+/*--------------------------------------------------------------
+  ## Comments
+  --------------------------------------------------------------*/
+.comment-content a {
+  word-wrap: break-word;
+}
+
+.bypostauthor {
+  display: block;
+}
+
+.blog-news .blog-post-area #commentform {
+  padding-bottom: 0;
+}
+
+.blog-news .blog-comment-form .form-submit {
+  margin-bottom: 0;
+}
+
+/*--------------------------------------------------------------
+  # Infinite scroll
+  --------------------------------------------------------------*/
+.infinite-scroll .posts-navigation,
+.infinite-scroll.neverending .site-footer {
+  display: none;
+}
+
+.infinity-end.neverending .site-footer {
+  display: block;
+}
+
+/*--------------------------------------------------------------
+  # Media
+  --------------------------------------------------------------*/
+.page-wrapper .inner-post .wp-smiley,
+.entry-content .wp-smiley,
+.comment-content .wp-smiley {
+  border: none;
+  margin-bottom: 0;
+  margin-top: 0;
+  padding: 0;
+}
+
+embed,
+iframe,
+object {
+  max-width: 100%;
+}
+
+/*--------------------------------------------------------------
+  ## Captions
+  --------------------------------------------------------------*/
+.wp-caption {
+  margin-bottom: 1.5em;
+  max-width: 100%;
+}
+
+.wp-caption img[class*="wp-image-"] {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.wp-caption .wp-caption-text {
+  margin: 0.8075em 0;
+  color: #555;
+}
+
+.wp-caption-text {
+  text-align: center;
+}
+
+/*--------------------------------------------------------------
+  ## Galleries
+  --------------------------------------------------------------*/
+
+.gallery {
+  margin-bottom: 1.5em;
+}
+
+.gallery-item {
+  display: inline-block;
+  text-align: center;
+  vertical-align: top;
+  width: 100%;
+}
+
+.gallery-columns-2 .gallery-item {
+  max-width: 50%;
+}
+
+.gallery-columns-3 .gallery-item {
+  max-width: 33.33%;
+}
+
+.gallery-columns-4 .gallery-item {
+  max-width: 25%;
+}
+
+.gallery-columns-5 .gallery-item {
+  max-width: 20%;
+}
+
+.gallery-columns-6 .gallery-item {
+  max-width: 16.66%;
+}
+
+.gallery-columns-7 .gallery-item {
+  max-width: 14.28%;
+}
+
+.gallery-columns-8 .gallery-item {
+  max-width: 12.5%;
+}
+
+.gallery-columns-9 .gallery-item {
+  max-width: 11.11%;
+}
+
+.gallery-caption {
+  display: block;
+}
+
+.single .blog-wrapper .blog-details figure.gallery-item {
+  margin-bottom: 20px;
+}
+
+.single .blog-wrapper .blog-details figure.gallery-item img {
+  margin-bottom: 5px;
+}
+
+.blocks-gallery-grid:not(.has-nested-images),
+.wp-block-gallery:not(.has-nested-images) {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding: 0;
+  margin-right: 5px;
+}
+
+/*** NEW CSS ***/
+
+.single-widgets .wp-block-group__inner-container h2 {
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 35px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #2e2d31;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.single-widgets .wp-block-group__inner-container h2::before {
+  position: absolute;
+  content: "";
+  background: #111111;
+  opacity: 0.5;
+  border: 1px solid #111111;
+  width: 70px;
+  bottom: -5px;
+  left: 0;
+}
+
+.single-widgets .wp-block-search .wp-block-search__label {
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 35px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #2e2d31;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.single-widgets .wp-block-search .wp-block-search__label:before {
+  position: absolute;
+  content: "";
+  background: #111111;
+  opacity: 0.5;
+  border: 1px solid #111111;
+  width: 70px;
+  bottom: -5px;
+  left: 0;
+}
+
+.single-widgets area form.wp-block-search__button-outside.wp-block-search__text-button.wp-block-search {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 767px) {
+  body:not(.rtl) .elementor-2670 .elementor-element.elementor-element-ad8c723 {
+    left: 60px;
+    top: 50%;
+    margin-top: -35px;
+  }
+
+  .custom-shape-left {
+    display: none !important;
+  }
+}
+
+/*--------------------------------------------------------------
+  ## Header Menu Issue With Admin Bar
+  --------------------------------------------------------------*/
+
+@media (max-width: 991px) {
+  body.logged-in.admin-bar .main-menu.show-menu {
+    margin-top: 42px;
+  }
+
+  body.logged-in.admin-bar header.sticky .main-menu.show-menu {
+    margin-top: 0;
+  }
+
+  .widget-area {
+    margin-top: 40px;
+  }
+}
+
+/*--------------------------------------------------------------
+  ## Header Menu Issue With Admin Bar
+  --------------------------------------------------------------*/
+
+@media (max-width: 991px) {
+
+  header.style-3.logged-in.sticky,
+  header.style-2.logged-in.sticky {
+    margin-top: 0;
+  }
+
+  header.logged-in .main-menu.show-menu {
+    margin-top: 42px;
+  }
+
+  header.logged-in .main-nav {
+    margin-top: 32px;
+  }
+
+  header.logged-in.sticky .main-nav {
+    margin-top: 0;
+  }
+
+  header.logged-in.sticky .main-menu.show-menu {
+    margin-top: 0;
+  }
+
+  .widget-area {
+    margin-top: 40px;
+  }
+}
+
+header.logged-in.sticky {
+  margin-top: 32px;
+  position: absolute;
+}
+
+header.logged-in.sticky {
+  position: fixed;
+}
+
+@media screen and (max-width: 783px) {
+  header.logged-in.sticky {
+    margin-top: 0;
+    position: fixed;
+  }
+
+  header.logged-in.sticky .main-nav {
+    margin-top: 0;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  header.logged-in.sticky {
+    position: fixed;
+  }
+}
+
+header.style-2.logged-in {
+  margin-top: 32px;
+}
+
+header.style-3.logged-in {
+  margin-top: 32px;
+}
+
+#dokan-seller-listing-wrap.grid-view .dokan-single-seller .store-content .store-data-container {
+  padding: 20px 20px;
+}
+
+.site-title h3 {
+  margin: 0;
+  color: #fff;
+}
+
+.error-area-wrapper .page-search input {
+  border: 1px solid #eee;
+  outline: none;
+  padding: 12px 15px;
+  color: #1f2230;
+  font-size: 1rem;
+  font-weight: 400;
+  font-family: 'Quicksand', sans-serif;
+  width: 100%;
+}
+
+#dokan-seller-listing-wrap ul.dokan-seller-wrap {
+  margin-bottom: 0;
+}
+
+table.my_auctions_activity {
+  width: 100%;
+}
+
+table.my_auctions_activity tr th {
+  background: red;
+  padding: 14px;
+  text-align: center;
+  color: #fff !important;
+}

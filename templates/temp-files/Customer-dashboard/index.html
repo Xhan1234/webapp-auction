@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>User Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" rel="stylesheet">
+{% if messages %}
+<div class="alert alert-success alert-dismissible fade show" role="alert" style="background-color: #D8FFD8; color: #006400;">
+    {% for message in messages %}
+    {% if message.tags %}
+    <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+    <p class="mb-0">
+        {% if message.tags == 'success' %}
+        <strong>Welcome, {{ request.user }}!</strong> You have successfully registered. Enjoy your experience!
+        {% else %}
+        {{ message }}
+        {% endif %}
+    </p>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+
+
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;900&display=swap');
+
+/* Resetting */
+ @media (max-width: 767.98px) {
+            .border-sm-start-none {
+                border-left: none !important;
+            }
+        }
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+nav {
+    min-height: 70px;
+}
+
+nav .navbar-brand  {
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+nav .navbar-brand  .h2 {
+    margin: 0;
+}
+
+nav .navbar-brand .h4 {
+    margin-bottom: 0px;
+    font-weight: 900;
+}
+
+nav .navbar-brand .fs-6 {
+    font-size: 0.88rem !important;
+}
+
+nav ul li {
+    padding: 0 20px;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #333;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+    color: #4e2296;
+}
+
+.navbar-light .navbar-nav .nav-link.active {
+    color: #451296;
+}
+
+nav ul li a .cart {
+    padding: 4px 6px;
+    border-radius: 6px;
+    position: relative;
+    display: inline;
+}
+
+nav ul li a .cart::after {
+    position: absolute;
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #ff5252;
+    top: -1px;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+#sidebar {
+    padding: 15px 0px 15px 0px;
+    border-radius: 10px;
+}
+
+#sidebar .h4 {
+    font-weight: 500;
+    padding-left: 15px;
+}
+
+#sidebar ul {
+    list-style: none;
+    margin: 0;
+    padding-left: 0rem;
+}
+
+#sidebar ul li {
+    padding: 10px 0;
+    display: block;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-left: 5px solid transparent;
+}
+
+#sidebar ul li.active {
+    border-left: 5px solid #ff5252;
+    background-color: #44007c;
+}
+
+#sidebar ul li a {
+    display: block;
+}
+
+#sidebar ul li a .fas,
+#sidebar ul li a .far {
+    color: #ddd;
+}
+
+#sidebar ul li a .link {
+    color: #fff;
+    font-weight: 500;
+}
+
+#sidebar ul li a .link-desc {
+    font-size: 0.8rem;
+    color: #ddd;
+}
+
+#main-content {
+    padding: 30px;
+    border-radius: 15px;
+}
+
+#main-content .h5,
+#main-content .text-uppercase {
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+#main-content .h5+div {
+    font-size: 0.9rem;
+}
+
+#main-content .box {
+    padding: 10px;
+    border-radius: 6px;
+    width: 170px;
+    height: 90px;
+}
+
+#main-content .box img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+#main-content .box .tag {
+    font-size: 0.9rem;
+    color: #000;
+    font-weight: 500;
+}
+
+#main-content .box .number {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.order {
+    padding: 10px 30px;
+    min-height: 150px;
+}
+
+.order .order-summary {
+    height: 100%;
+}
+
+.order .blue-label {
+    background-color: #aeaeeb;
+    color: #0046dd;
+    font-size: 0.9rem;
+    padding: 0px 3px;
+}
+
+.order .green-label {
+    background-color: #a8e9d0;
+    color: #008357;
+    font-size: 0.9rem;
+    padding: 0px 3px;
+}
+
+.order .fs-8 {
+    font-size: 0.85rem;
+}
+
+.order .rating img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.order .rating .fas,
+.order .rating .far {
+    font-size: 0.9rem;
+}
+
+.order .rating .fas {
+    color: #daa520;
+}
+
+.order .status {
+    font-weight: 600;
+}
+
+.order .btn.btn-primary {
+    background-color: #fff;
+    color: #4e2296;
+    border: 1px solid #4e2296;
+}
+
+.order .btn.btn-primary:hover {
+    background-color: #4e2296;
+    color: #fff;
+}
+
+.order .progressbar-track {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.bg_white { color: #FFFFFF
+
+
+}
+.order .progressbar-track .progressbar {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 0rem;
+}
+
+.order .progressbar-track .progressbar li {
+    font-size: 1.5rem;
+    border: 1px solid #333;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background-color: #dddddd;
+    z-index: 100;
+    position: relative;
+}
+
+.order .progressbar-track .progressbar li.green {
+    border: 1px solid #007965;
+    background-color: #d5e6e2;
+}
+
+.order .progressbar-track .progressbar li::after {
+    position: absolute;
+    font-size: 0.9rem;
+    top: 50px;
+    left: 0px;
+}
+
+#tracker {
+    position: absolute;
+    border-top: 1px solid #bbb;
+    width: 100%;
+    top: 25px;
+}
+
+#step-1::after {
+    content: 'Placed';
+}
+
+#step-2::after {
+    content: 'Accepted';
+    left: -10px;
+}
+
+#step-3::after {
+    content: 'Packed';
+}
+
+#step-4::after {
+    content: 'Shipped';
+}
+
+#step-5::after {
+    content: 'Delivered';
+    left: -10px;
+}
+
+
+
+/* Backgrounds */
+.bg-purple {
+    background-color: #32c36c;
+}
+
+.bg-light {
+    background-color: #f9f7f7 !important;
+}
+
+.green {
+    color: #007965 !important;
+}
+
+/* Media Queries */
+@media(max-width: 1199.5px) {
+    nav ul li {
+        padding: 0 10px;
+    }
+}
+
+@media(max-width: 500px) {
+    .order .progressbar-track .progressbar li {
+        font-size: 1rem;
+    }
+
+    .order .progressbar-track .progressbar li::after {
+        font-size: 0.8rem;
+        top: 35px;
+    }
+
+    #tracker {
+        top: 20px;
+    }
+}
+
+@media(max-width: 440px) {
+    #main-content {
+        padding: 20px;
+    }
+
+    .order {
+        padding: 20px;
+    }
+
+    #step-4::after {
+        left: -5px;
+    }
+}
+
+@media(max-width: 395px) {
+    .order .progressbar-track .progressbar li {
+        font-size: 0.8rem;
+    }
+
+    .order .progressbar-track .progressbar li::after {
+        font-size: 0.7rem;
+        top: 35px;
+    }
+
+    #tracker {
+        top: 15px;
+    }
+
+    .order .btn.btn-primary {
+        font-size: 0.85rem;
+    }
+}
+
+@media(max-width: 355px) {
+    #main-content {
+        padding: 15px;
+    }
+
+    .order {
+        padding: 10px;
+    }
+}
+
+
+
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <button aria-controls="mynav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+                data-bs-target="#mynav" data-bs-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand bg-purple" href="{% url 'home' %}">
+            <div class="d-flex">
+                <img alt="Bidout" class="img-fluid"
+                     src="https://bidout-wp.b-cdn.net/wp-content/themes/bidout-wp/includes/theme-options/images/others/logo.svg">
+            </div>
+        </a>
+        <div class="collapse navbar-collapse" id="mynav">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a aria-current="page" class="nav-link active" href="#">Categories <span
+                            class="fas fa-th-large px-1"></span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Exclusive</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Collections</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Blogs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <div class="cart bg-purple">
+                            <span class="fas fa-shopping-cart text-white"></span>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"> <span class="fas fa-user pe-2"></span> Hello {{request.user}} </a>
+                    <a class="nav-link" href="{% url 'user_logout:user_logout' %}"> <span
+                            class="fas fa-user pe-2"></span> Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-lg-3 my-lg-0 my-md-1">
+            <div class="bg-purple" id="sidebar">
+                <div class="h4 text-white">Account</div>
+                <ul>
+                    <li class="active-bg-purple">
+                        <a class="text-decoration-none d-flex align-items-start" href="#">
+                            <div class="fas fa-box pt-2 me-3"></div>
+                            <div class="d-flex flex-column">
+                                <div class="link">My Account</div>
+                                <div class="link-desc">View & Manage orders and returns</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="text-decoration-none d-flex align-items-start" href="#">
+                            <div class="fas fa-box-open pt-2 me-3"></div>
+                            <div class="d-flex flex-column">
+                                <div class="link">My Orders</div>
+                                <div class="link-desc">View & Manage orders and returns</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="text-decoration-none d-flex align-items-start" href="{% url 'message' %}">
+                            <div class="far fa-address-book pt-2 me-3"></div>
+                            <div class="d-flex flex-column">
+                                <div class="link">My Messages</div>
+                                <div class="link-desc">View & Manage Messages</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="text-decoration-none d-flex align-items-start"
+                           href="{% url 'vendor_user_profile:edit_profile' request.user.username %}">
+                            <div class="far fa-user pt-2 me-3"></div>
+                            <div class="d-flex flex-column">
+                                <div class="link">My Profile</div>
+                                <div class="link-desc">Change your profile details & password</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="text-decoration-none d-flex align-items-start" href="#">
+                            <div class="fas fa-headset pt-2 me-3"></div>
+                            <div class="d-flex flex-column">
+                                <div class="link">Help & Support</div>
+                                <div class="link-desc">Contact Us for help and support</div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-9 my-lg-0 my-1">
+            <div class="bg-white border" id="main-content">
+                <div class="d-flex flex-column">
+                    <div class="h4">Logged in as: {{request.user}} ,</div>
+
+                </div>
+                <div class="d-flex my-4 flex-wrap">
+                    <div class="box me-4 my-1 bg-light">
+                        <img alt=""
+                             src="https://www.freepnglogos.com/uploads/box-png/cardboard-box-brown-vector-graphic-pixabay-2.png">
+                        <div class="d-flex align-items-center mt-2">
+                            <div class="tag">Orders placed</div>
+                            <div class="ms-auto number">10</div>
+                        </div>
+                    </div>
+                    <div class="box me-4 my-1 bg-light">
+                        <img alt=""
+                             src="https://www.freepnglogos.com/uploads/shopping-cart-png/shopping-cart-campus-recreation-university-nebraska-lincoln-30.png">
+                        <div class="d-flex align-items-center mt-2">
+                            <div class="tag">Items in Cart</div>
+                            <div class="ms-auto number">10</div>
+                        </div>
+                    </div>
+                    <div class="box me-4 my-1 bg-light">
+                        <img alt=""
+                             src="https://www.freepnglogos.com/uploads/love-png/love-png-heart-symbol-wikipedia-11.png">
+                        <div class="d-flex align-items-center mt-2">
+                            <div class="tag">Wishlist</div>
+                            <div class="ms-auto number">10</div>
+                        </div>
+                    </div>
+                    <!-- ... Other HTML code ... -->
+                    {% if is_vendor %}
+                    <div class="box me-3 my-1 bg-light">
+                        <img alt=""
+                             src="https://cdn1.vectorstock.com/i/1000x1000/92/50/sell-online-rubber-stamp-vector-13679250.jpg">
+                        <div class="d-flex align-items-center mt-2">
+                            <a href="{% url 'add_products' %}">
+                                <div class="tag">Add Product</div>
+                            </a>
+                            <div class="ms-auto number">{{ product_count }}</div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+
+                    <!-- ... Other HTML code ... -->
+
+
+                </div>
+                <div class="text-uppercase">My recent orders</div>
+                <div class="order my-3 bg-light">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="d-flex flex-column justify-content-between order-summary">
+                                <div class="d-flex align-items-center">
+                                    <div class="text-uppercase">Order #fur10001</div>
+                                    <div class="blue-label ms-auto text-uppercase">paid</div>
+                                </div>
+                                <div class="fs-8">Products #03</div>
+                                <div class="fs-8">22 August, 2020 | 12:05 PM</div>
+                                <div class="rating d-flex align-items-center pt-1">
+                                    <img alt=""
+                                         src="https://www.freepnglogos.com/uploads/like-png/like-png-hand-thumb-sign-vector-graphic-pixabay-39.png"><span
+                                        class="px-2">Rating:</span>
+                                    <span class="fas fa-star"></span>
+                                    <span class="fas fa-star"></span>
+                                    <span class="fas fa-star"></span>
+                                    <span class="fas fa-star"></span>
+                                    <span class="far fa-star"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="d-sm-flex align-items-sm-start justify-content-sm-between">
+                                <div class="status">Status : Delivered</div>
+                                <div class="btn btn-primary text-uppercase">order info</div>
+                            </div>
+                            <div class="progressbar-track">
+                                <ul class="progressbar">
+                                    <li class="text-muted green" id="step-1">
+                                        <span class="fas fa-gift"></span>
+                                    </li>
+                                    <li class="text-muted green" id="step-2">
+                                        <span class="fas fa-check"></span>
+                                    </li>
+                                    <li class="text-muted green" id="step-3">
+                                        <span class="fas fa-box"></span>
+                                    </li>
+                                    <li class="text-muted green" id="step-4">
+                                        <span class="fas fa-truck"></span>
+                                    </li>
+                                    <li class="text-muted green" id="step-5">
+                                        <span class="fas fa-box-open"></span>
+                                    </li>
+                                </ul>
+                                <div id="tracker"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="order my-3 bg-light">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="d-flex flex-column justify-content-between order-summary">
+                                <div class="d-flex align-items-center">
+                                    <div class="text-uppercase">Order #fur10001</div>
+                                    <div class="green-label ms-auto text-uppercase">cod</div>
+                                </div>
+                                <div class="fs-8">Products #03</div>
+                                <div class="fs-8">22 August, 2020 | 12:05 PM</div>
+                                <div class="rating d-flex align-items-center pt-1">
+                                    <img alt=""
+                                         src="https://www.freepnglogos.com/uploads/like-png/like-png-hand-thumb-sign-vector-graphic-pixabay-39.png"><span
+                                        class="px-2">Rating:</span>
+                                    <span class="fas fa-star"></span>
+                                    <span class="fas fa-star"></span>
+                                    <span class="fas fa-star"></span>
+                                    <span class="fas fa-star"></span>
+                                    <span class="far fa-star"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="d-sm-flex align-items-sm-start justify-content-sm-between">
+                                <div class="status">Status : Delivered</div>
+                                <div class="btn btn-primary text-uppercase">order info</div>
+                            </div>
+                            <div class="progressbar-track">
+                                <ul class="progressbar">
+                                    <li class="text-muted green" id="step-1">
+                                        <span class="fas fa-gift"></span>
+                                    </li>
+                                    <li class="text-muted" id="step-2">
+                                        <span class="fas fa-check"></span>
+                                    </li>
+                                    <li class="text-muted" id="step-3">
+                                        <span class="fas fa-box"></span>
+                                    </li>
+                                    <li class="text-muted" id="step-4">
+                                        <span class="fas fa-truck"></span>
+                                    </li>
+                                    <li class="text-muted" id="step-5">
+                                        <span class="fas fa-box-open"></span>
+                                    </li>
+                                </ul>
+                                <div id="tracker"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-uppercase">My recent listed</div>
+                <br>
+                {% for product in products %}
+                <section style="background-color: #eee;">
+                    <div class="container py-1">
+                        <!-- Listed Added Products -->
+                        <div class="table">
+                            <div class="card shadow-0 border rounded-3">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                                            <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                                                <img class="w-100"
+                                                     src="{{ product.image.url }}"/>
+                                                <a href="#!">
+                                                    <div class="hover-overlay">
+                                                        <div class="mask"
+                                                             style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-6 col-xl-6">
+                                            <h5>{{ product.title }}</h5>
+                                            <div class="d-flex flex-row">
+                                                <div class="text-danger mb-1 me-2">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                                <span>310</span>
+                                            </div>
+                                            <div class="mt-1 mb-0 text-muted small">
+                                                <span>100% cotton</span>
+                                                <span class="text-primary"> • </span>
+                                                <span>Light weight</span>
+                                                <span class="text-primary"> • </span>
+                                                <span>Best finish<br/></span>
+                                            </div>
+                                            <div class="mb-2 text-muted small">
+                                                <span>Unique design</span>
+                                                <span class="text-primary"> • </span>
+                                                <span>For men</span>
+                                                <span class="text-primary"> • </span>
+                                                <span>Casual<br/></span>
+                                            </div>
+                                            <p class="text-truncate mb-4 mb-md-0">
+                                                {{ product.description }}
+                                            </p>
+                                        </div>
+                                        <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                                            <div class="d-flex flex-row align-items-center mb-1">
+                                                <h4 class="mb-1 me-1">${{product.price}}</h4>
+                                                <!-- for discounts <span class="text-danger"><s>$20.99</s></span> -->
+                                            </div>
+                                            <h6 class="text-success">Free shipping</h6>
+                                            <div class="d-flex flex-column mt-4">
+                                                <a class="btn btn-primary btn-sm mt-2"
+                                                   href="{% url 'update_product' product.slug %}"
+                                                   type="button">Update</a>
+                                                <a class="btn btn-danger btn-sm mt-2"
+                                                   href="{% url 'delete_product' product.slug %}" type="button">
+                                                    Delete
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    {% endfor %}
+                </section>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

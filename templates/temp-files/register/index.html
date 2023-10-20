@@ -1,0 +1,162 @@
+{% extends 'temp-files/base.html' %}
+{% block content %}
+
+<div class="inner-banner">
+    <div class="container">
+        <h2 class="inner-banner-title wow fadeInLeft" data-wow-delay=".2s" data-wow-duration="1.5s">
+            My account
+        </h2>
+        <nav aria-label="breadcrumb">
+            <ul class="breadcrumb" id="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html"> Home </a></li>
+                <li class="active">My account</li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<div class="page-wrapper sec-mar">
+    <div class="container">
+        <article class="post-1408 page type-page status-publish hentry" id="post-1408">
+            <div class="inner-post">
+                <div class="woocommerce">
+                    <div class="woocommerce-notices-wrapper"></div>
+
+                    <div class="u-columns col2-set" id="customer_login">
+                        <div class="u-column1 col-1">
+                            <form action="{% url 'register_user' %}"
+                                  class="woocommerce-form woocommerce-form-register register" method="POST">
+                                {% csrf_token %}
+                                <h2>Register</h2>
+                                <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                    <label for="reg_username">Username&nbsp;<span class="required">*</span></label>
+                                    <input autocomplete="given-name"
+                                           class="woocommerce-Input woocommerce-Input--text input-text"
+                                           id="reg_username" name="{{ form.username.name }}"
+                                    />
+                                </p>
+
+                                <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                    <label for="reg_email">Email address&nbsp;<span class="required">*</span></label>
+                                    <input autocomplete="family-name"
+                                           class="woocommerce-Input woocommerce-Input--text input-text"
+                                           id="reg_email" name="{{ form.email.name }}"/>
+                                </p>
+
+                                <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                    <label for="reg_password">Password&nbsp;<span class="required">*</span></label>
+                                    <input autocomplete="new-password"
+                                           class="woocommerce-Input woocommerce-Input--text input-text"
+                                           id="reg_password" name="{{ form.password1.name }}" type="password"/>
+                                </p>
+
+                                <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                    <label for="reg_password_repeat">Repeat Password&nbsp;<span
+                                            class="required">*</span></label>
+                                    <input autocomplete="new-password"
+                                           class="woocommerce-Input woocommerce-Input--text input-text"
+                                           id="reg_password_repeat" name="{{ form.password2.name }}" type="password"/>
+                                </p>
+
+                                <p class="form-row form-group user-role vendor-customer-registration">
+                                    <label class="radio">
+                                        <input checked='checked' name="{{ form.role.name }}" type="radio"
+                                               value="customer">
+                                        I am a customer
+                                    </label>
+                                    <br/>
+                                    <label class="radio">
+                                        <input id="vendor_radio" name="{{ form.role.name }}" type="radio"
+                                               value="vendor">
+                                        I am a vendor
+                                    </label>
+                                </p>
+
+                                <!-- Business Name Field -->
+                                <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide"
+                                   id="business_name_row" style="display: none;">
+                                    <label for="reg_business_name">Business Name&nbsp;<span
+                                            class="required">*</span></label>
+                                    <input autocomplete="organization"
+                                           class="woocommerce-Input woocommerce-Input--text input-text"
+                                           id="reg_business_name" name="{{ form.business_name.name }}"
+                                    />
+
+                                </p>
+
+                                <div class="woocommerce-privacy-policy-text">
+                                    <p>Your personal data will be used to
+                                        support your experience throughout this website, to manage access to your
+                                        account,
+                                        and for other purposes described in our <a
+                                                class="woocommerce-privacy-policy-link"
+                                                href="../privacy-policy/index.html"
+                                                target="_blank">privacy policy</a>.
+                                    </p>
+                                </div>
+                                <p>
+                                    <br>
+                                    <br>
+
+                                    {% for message in messages %}
+                                <p id="messages"> {{message}}</p>
+                                {% endfor %}
+                                {{form.errors}}
+
+                                <p class="woocommerce-form-row form-row">
+                                    <input id="woocommerce-register-nonce" name="woocommerce-register-nonce"
+                                           type="hidden" value="715f013b08"/><input name="_wp_http_referer"
+                                                                                    type="hidden"
+                                                                                    value="/my-account/"/>
+                                    <button class="woocommerce-Button woocommerce-button button wp-element-button woocommerce-form-register__submit"
+                                            name="register"
+                                            type="submit" value="Register">Register
+                                    </button>
+                                </p>
+                                </p>
+                            </form>
+                            <form class="woocommerce-form woocommerce-form-login login">
+                                <!-- ... your login form fields ... -->
+                                <p>
+                                    Already a member?
+                                    <a href="{% url 'user_login' %}" style="text-decoration: none; color: inherit;">
+                                        Log in
+                                    </a>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div> <!-- end .container -->
+</div>
+
+
+<!-- JavaScript to toggle "business name" field -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const vendorRadio = document.getElementById("vendor_radio");
+        const customerRadio = document.querySelector("input[name='{{ form.role.name }}'][value='customer']");
+        const businessNameRow = document.getElementById("business_name_row");
+
+        // Add an event listener to the "customer" radio button
+        customerRadio.addEventListener("change", function () {
+            if (customerRadio.checked) {
+                businessNameRow.style.display = "none";  // Hide the "business name" field
+            }
+        });
+
+        vendorRadio.addEventListener("change", function () {
+            if (vendorRadio.checked) {
+                businessNameRow.style.display = "block";  // Show the "business name" field
+            } else {
+                businessNameRow.style.display = "none";
+            }
+        });
+    });
+
+</script>
+
+
+{% endblock %}

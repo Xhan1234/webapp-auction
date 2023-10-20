@@ -1,0 +1,82 @@
+{% extends 'temp-files/base.html' %}
+{% block content %}
+<div class="inner-banner">
+    <div class="container">
+        <h2 class="inner-banner-title wow fadeInLeft" data-wow-delay=".2s" data-wow-duration="1.5s">
+            My account </h2>
+        <nav aria-label="breadcrumb">
+            <ul class="breadcrumb" id="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html"> Home </a></li>
+                <li class="active">My account</li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<div class="page-wrapper sec-mar">
+    <div class="container">
+        <article class="post-1408 page type-page status-publish hentry" id="post-1408">
+            <div class="inner-post">
+                <div class="woocommerce">
+                    <div class="woocommerce-notices-wrapper"></div>
+
+                    <div class="u-columns col2-set" id="customer_login">
+                        <div class="u-column1 col-1">
+
+
+                            <form action="{% url 'user_login' %}" class="woocommerce-form woocommerce-form-login login"
+                                  method="POST">
+                                {% csrf_token %}
+                                <h2>Login</h2>
+
+                                <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                    <label for="reg_username">Username or email address&nbsp;<span
+                                            class="required">*</span></label>
+                                    <input autocomplete="username"
+                                           class="woocommerce-Input woocommerce-Input--text input-text"
+                                           id="reg_username" name="reg_username"/>
+                                </p>
+
+                                <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                    <label for="reg_password">Password&nbsp;<span class="required">*</span></label>
+                                    <input autocomplete="current-password"
+                                           class="woocommerce-Input woocommerce-Input--text input-text"
+                                           id="reg_password" name="reg_password" type="password"/>
+                                </p>
+
+                                <p class="form-row">
+                                    <label class="woocommerce-form__label woocommerce-form__label-for-checkbox woocommerce-form-login__rememberme">
+                                        <input class="woocommerce-form__input woocommerce-form__input-checkbox"
+                                               id="rememberme" name="rememberme" type="checkbox" value="forever"/>
+                                        <span>Remember me</span>
+                                    </label>
+                                    <input id="woocommerce-login-nonce" name="woocommerce-login-nonce" type="hidden"
+                                           value="366d9c61e4"/><input name="_wp_http_referer" type="hidden"
+                                                                      value="/my-account/"/>
+                                    <button class="woocommerce-button button woocommerce-form-login__submit wp-element-button"
+                                            name="login"
+                                            type="submit">Log in
+                                    </button>
+                                    {% for message in messages %}
+                                <p id="messages"> {{message}}</p>
+                                {% endfor %}
+                                {{form.errors}}
+                                </p>
+                                <p class="woocommerce-LostPassword lost_password">
+                                    <a href="{% url 'lost_password' %}">Lost your password?</a>
+                                </p>
+                            </form>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </article>
+    </div> <!-- end .container -->
+</div>
+
+{% endblock %}

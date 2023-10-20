@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Products</title>
+    <!-- Add Bootstrap CSS link here -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<header>
+    <!-- Jumbotron -->
+    <div class="p-3 text-center bg-white border-bottom">
+        <div class="container">
+            <div class="d-flex justify-content-between">
+                <!-- Left elements -->
+                <div class="">
+                    <a class="" href="https://mdbootstrap.com/" target="_blank">
+                        <img height="35" src="https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.png"/>
+                    </a>
+                </div>
+                <!-- Left elements -->
+
+                <!-- right elements -->
+                <div class="">
+                    <a class="me-1 border rounded py-1 px-3 nav-link"
+                       href="https://github.com/mdbootstrap/bootstrap-material-design" target="_blank"> <i
+                            class="fas fa-user-alt me-2"></i>Sign in </a>
+                </div>
+                <!-- right elements -->
+            </div>
+        </div>
+    </div>
+    <!-- Jumbotron -->
+
+    <!-- Heading -->
+    <div class="bg-primary">
+        <div class="container py-4">
+            <!-- Breadcrumb -->
+            <nav class="d-flex">
+                <h6 class="mb-0">
+                    <a class="text-white-50" href="{% url 'home' %}">Home</a>
+                    <span class="text-white-50 mx-2"> > </span>
+                    <a class="text-white-50" href="{% url 'order_product:cart' %}">2. Shopping cart</a>
+                    <span class="text-white-50 mx-2"> > </span>
+                    <a class="text-white" href=""><u>3. Order info</u></a>
+                    <span class="text-white-50 mx-2"> > </span>
+                    <a class="text-white-50" href="">4. Payment</a>
+                </h6>
+            </nav>
+            <!-- Breadcrumb -->
+        </div>
+    </div>
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert {% if message.tags == 'error' %}alert-danger{% endif %}
+                {% if message.tags == 'success' %}alert-success{% endif %}
+                {% if message.tags == 'info' %}alert-info{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+
+        {% if missing_fields_message %}
+        <div class="alert alert-warning">
+            {{ missing_fields_message }}
+        </div>
+        {% endif %}
+    </div>
+
+
+    <!-- Heading -->
+</header>
+
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 col-lg-8 mb-4">
+                <div class="card mb-4 border shadow-0">
+                    <div class="p-4 d-flex justify-content-between">
+                        <div class="">
+                            <h5>Have an account?</h5>
+                            <p class="mb-0 text-wrap ">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center flex-column flex-md-row">
+                            <a class="btn btn-outline-primary me-0 me-md-2 mb-2 mb-md-0 w-100" href="#">Register</a>
+                            <a class="btn btn-primary shadow-0 text-nowrap w-100" href="#">Sign in</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Checkout -->
+                <div class="card shadow-0 border">
+                    <div class="p-4">
+                        <h5 class="card-title mb-3">Guest checkout</h5>
+                        <div class="row">
+                            <div class="col-6 mb-3">
+                                <p class="mb-0">First name</p>
+                                <div class="form-outline">
+                                    <input class="form-control" id="first_name" name="first_name"
+                                           placeholder="{{ user_data.first_name }}" type="text"/>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <p class="mb-0">Last name</p>
+                                <div class="form-outline">
+                                    <input class="form-control" id="last_name" name="last_name"
+                                           placeholder="{% if user_data.last_name %}{{ user_data.last_name }}{% endif %}"
+                                           type="text"/>
+                                </div>
+                            </div>
+
+                            <div class="col-6 mb-3">
+                                <p class="mb-0">Phone</p>
+                                <div class="form-outline">
+                                    <input class="form-control" id="phone" name="phone"
+                                           placeholder="{% if user_data.phone %}{{ user_data.phone }}{% endif %}"
+                                           type="tel"/>
+                                </div>
+                            </div>
+
+                            <div class="col-6 mb-3">
+                                <p class="mb-0">Email</p>
+                                <div class="form-outline">
+                                    <input class="form-control" id="email" name="email"
+                                           placeholder="{{ user_data.email }}" type="email"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" id="flexCheckDefault" type="checkbox" value=""/>
+                            <label class="form-check-label" for="flexCheckDefault">Keep me up to date on news</label>
+                        </div>
+
+                        <hr class="my-4"/>
+
+                        <h5 class="card-title mb-3">Shipping info</h5>
+
+                        <div class="row mb-3">
+                            <div class="col-lg-4 mb-3">
+                                <!-- Default checked radio -->
+                                <div class="form-check h-100 border rounded-3">
+                                    <div class="p-3">
+                                        <input checked class="form-check-input" id="flexRadioDefault1"
+                                               name="flexRadioDefault" type="radio"/>
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Express delivery <br/>
+                                            <small class="text-muted">3-4 days via Fedex </small>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mb-3">
+                                <!-- Default radio -->
+                                <div class="form-check h-100 border rounded-3">
+                                    <div class="p-3">
+                                        <input class="form-check-input" id="flexRadioDefault2" name="flexRadioDefault"
+                                               type="radio"/>
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Post office <br/>
+                                            <small class="text-muted">20-30 days via post </small>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 mb-3">
+                                <!-- Default radio -->
+                                <div class="form-check h-100 border rounded-3">
+                                    <div class="p-3">
+                                        <input class="form-check-input" id="flexRadioDefault3" name="flexRadioDefault"
+                                               type="radio"/>
+                                        <label class="form-check-label" for="flexRadioDefault3">
+                                            Self pick-up <br/>
+                                            <small class="text-muted">Come to our shop </small>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-8 mb-3">
+                                <p class="mb-0">Address</p>
+                                <div class="form-outline">
+                                    <input class="form-control" id="street" name="street"
+                                           placeholder="{{ user_data.street }}" type="text"/>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4 mb-3">
+                                <p class="mb-0">State</p>
+                                <div class="form-outline">
+                                    <input class="form-control" id="state" name="state"
+                                           placeholder="{{ user_data.state }}" type="text"/>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4 mb-3">
+                                <p class="mb-0">House</p>
+                                <div class="form-outline">
+                                    <input class="form-control" id="house" name="house"
+                                           placeholder="{{ user_data.house }}" type="text"/>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4 col-6 mb-3">
+                                <p class="mb-0">Postal code</p>
+                                <div class="form-outline">
+                                    <input class="form-control" id="postal_code" name="postal_code"
+                                           placeholder="{{ user_data.postal_code }}" type="text"/>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4 col-6 mb-3">
+                                <p class="mb-0">Zip</p>
+                                <div class="form-outline">
+                                    <input class="form-control" id="zip_code" name="zip_code"
+                                           placeholder="{{ user_data.zip_code }}" type="text"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" id="flexCheckDefault1" type="checkbox" value=""/>
+                            <label class="form-check-label" for="flexCheckDefault1">Save this address</label>
+                        </div>
+
+                        <div class="mb-3">
+                            <p class="mb-0">Message to seller</p>
+                            <div class="form-outline">
+                                <textarea class="form-control" id="textAreaExample1" rows="2"></textarea>
+                            </div>
+                        </div>
+
+                        <form action="{% url 'order_product:make_purchase' %}" id="checkoutForm" method="post">
+                            {% csrf_token %}
+
+                            <div class="float-end">
+                                <button class="btn btn-light border" id="cancelButton" type="button">Cancel</button>
+                                <button class="btn btn-success shadow-0 border" id="confirmButton" type="button">Confirm
+                                    Checkout
+                                </button>
+                            </div>
+
+
+                    </div>
+                </div>
+                <!-- Checkout -->
+            </div>
+            <div class="col-xl-4 col-lg-4 d-flex justify-content-center justify-content-lg-end">
+                <div class="ms-lg-4 mt-4 mt-lg-0" style="max-width: 320px;">
+                    <h6 class="mb-3">Summary</h6>
+                    <div class="d-flex justify-content-between">
+                        <p class="mb-2">Total price:</p>
+                        <p class="mb-2">${{total_cost}}</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p class="mb-2">Discount:</p>
+                        <p class="mb-2 text-danger">- $00.00</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p class="mb-2">Shipping cost:</p>
+                        <p class="mb-2">+ $20.00</p>
+                    </div>
+                    <hr/>
+                    <div class="d-flex justify-content-between">
+                        <p class="mb-2">Total price:</p>
+                        <p class="mb-2 fw-bold">${{total_cost_with_shipping}}</p>
+                    </div>
+
+                    <div class="input-group mt-3 mb-4">
+                        <input class="form-control border" name="" placeholder="Promo code" type="text"/>
+                        <button class="btn btn-light text-primary border">Apply</button>
+                    </div>
+
+                    <hr/>
+                    <h6 class="text-dark my-4">Items in cart</h6>
+                    {% for cart in cart_items %}
+
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="me-3 position-relative">
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-secondary">
+
+              </span>
+                            <img class="img-sm rounded border"
+                                 src="{{cart.product.image.url}}" style="height: 96px; width: 96x;"/>
+                        </div>
+                        <div class="">
+                            <a class="nav-link" href="#">
+                                {{cart.product.title}} <br/>
+                                {{ cart.product.description|truncatewords:4 }}
+                                <<!-- Product ID (Automatically populated from the cart) -->
+                                <input name="product_id" type="hidden" value="{{ cart.product.id }}">
+
+                                <!-- Quantity (Default value is 1) -->
+                                <input name="quantity" type="hidden" value="1">
+                            </a>
+                            <div class="price text-muted">Item Price: ${{cart.product.price}}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="text-center text-lg-start text-muted bg-primary mt-3">
+    <!-- Section: Links  -->
+    <section class="">
+        <div class="container text-center text-md-start pt-4 pb-4">
+            <!-- Grid row -->
+            <div class="row mt-3">
+                <!-- Grid column -->
+                <div class="col-12 col-lg-3 col-sm-12 mb-2">
+                    <!-- Content -->
+                    <a class="text-white h2" href="https://mdbootstrap.com/" target="_blank">
+                        MDB
+                    </a>
+                    <p class="mt-1 text-white">
+                        © 2023 Copyright: MDBootstrap.com
+                    </p>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-6 col-sm-4 col-lg-2">
+                    <!-- Links -->
+                    <h6 class="text-uppercase text-white fw-bold mb-2">
+                        Store
+                    </h6>
+                    <ul class="list-unstyled mb-4">
+                        <li><a class="text-white-50" href="#">About us</a></li>
+                        <li><a class="text-white-50" href="#">Find store</a></li>
+                        <li><a class="text-white-50" href="#">Categories</a></li>
+                        <li><a class="text-white-50" href="#">Blogs</a></li>
+                    </ul>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-6 col-sm-4 col-lg-2">
+                    <!-- Links -->
+                    <h6 class="text-uppercase text-white fw-bold mb-2">
+                        Information
+                    </h6>
+                    <ul class="list-unstyled mb-4">
+                        <li><a class="text-white-50" href="#">Help center</a></li>
+                        <li><a class="text-white-50" href="#">Money refund</a></li>
+                        <li><a class="text-white-50" href="#">Shipping info</a></li>
+                        <li><a class="text-white-50" href="#">Refunds</a></li>
+                    </ul>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-6 col-sm-4 col-lg-2">
+                    <!-- Links -->
+                    <h6 class="text-uppercase text-white fw-bold mb-2">
+                        Support
+                    </h6>
+                    <ul class="list-unstyled mb-4">
+                        <li><a class="text-white-50" href="#">Help center</a></li>
+                        <li><a class="text-white-50" href="#">Documents</a></li>
+                        <li><a class="text-white-50" href="#">Account restore</a></li>
+                        <li><a class="text-white-50" href="#">My orders</a></li>
+                    </ul>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-12 col-sm-12 col-lg-3">
+                    <!-- Links -->
+                    <h6 class="text-uppercase text-white fw-bold mb-2">Newsletter</h6>
+                    <p class="text-white">Stay in touch with latest updates about our products and offers</p>
+                    <div class="input-group mb-3">
+                        <input aria-describedby="button-addon2" aria-label="Email" class="form-control border"
+                               placeholder="Email"
+                               type="email"/>
+                        <button class="btn btn-light border shadow-0" data-mdb-ripple-color="dark" id="button-addon2"
+                                type="button">
+                            Join
+                        </button>
+                    </div>
+                </div>
+                <!-- Grid column -->
+            </div>
+            <!-- Grid row -->
+        </div>
+    </section>
+    <!-- Section: Links  -->
+
+    <div class="">
+        <div class="container">
+            <div class="d-flex justify-content-between py-4 border-top">
+                <!--- payment --->
+                <div>
+                    <i class="fab fa-lg fa-cc-visa text-white"></i>
+                    <i class="fab fa-lg fa-cc-amex text-white"></i>
+                    <i class="fab fa-lg fa-cc-mastercard text-white"></i>
+                    <i class="fab fa-lg fa-cc-paypal text-white"></i>
+                </div>
+                <!--- payment --->
+
+                <!--- language selector --->
+                <div class="dropdown dropup">
+                    <a aria-expanded="false" class="dropdown-toggle text-white" data-mdb-toggle="dropdown" href="#"
+                       id="Dropdown" role="button"> <i
+                            class="flag-united-kingdom flag m-0 me-1"></i>English </a>
+
+                    <ul aria-labelledby="Dropdown" class="dropdown-menu dropdown-menu-endp">
+                        <li>
+                            <a class="dropdown-item" href="#"><i class="flag-united-kingdom flag"></i>English <i
+                                    class="fa fa-check text-success ms-2"></i></a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider"/>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#"><i class="flag-poland flag"></i>Polski</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#"><i class="flag-china flag"></i>中文</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#"><i class="flag-japan flag"></i>日本語</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#"><i class="flag-germany flag"></i>Deutsch</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#"><i class="flag-france flag"></i>Français</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#"><i class="flag-spain flag"></i>Español</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#"><i class="flag-russia flag"></i>Русский</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#"><i class="flag-portugal flag"></i>Português</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--- language selector --->
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Add Bootstrap JS and jQuery scripts here (if needed) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    document.getElementById('confirmButton').addEventListener('click', function () {
+        // Handle confirm checkout button click asynchronously
+        var form = document.getElementById('checkoutForm');
+        form.submit(); // This will trigger the form submission to the 'make_purchase' view
+    });
+
+
+
+
+
+
+
+</script>
+<script>
+    document.querySelectorAll('.purchase-button').forEach(function (button) {
+        button.addEventListener('click', function () {
+            // Find the nearest form element to the clicked button
+            var form = button.closest('form');
+
+            // Find the hidden input fields for product_id and quantity in this form
+            var productIdInput = form.querySelector('[name="product_id"]');
+            var quantityInput = form.querySelector('[name="quantity"]');
+
+            // Get the product ID and quantity from the current item
+            var productId = form.dataset.productId; // Add a 'data-product-id' attribute to the form with the product ID
+            var quantity = 1; // Set the default quantity (you can adjust this as needed)
+
+            // Set the values of the hidden input fields
+            productIdInput.value = productId;
+            quantityInput.value = quantity;
+
+            // Trigger the form submission
+            form.submit();
+        });
+    });
+
+    // Handle the Confirm Checkout button click asynchronously
+    document.getElementById('confirmButton').addEventListener('click', function () {
+        // Handle the Confirm Checkout button click asynchronously
+        var form = document.getElementById('checkoutForm');
+        form.submit(); // This will trigger the form submission to the 'make_purchase' view
+    });
+
+
+
+
+
+</script>
+
+</body>
+</html>
+<!-- Footer -->

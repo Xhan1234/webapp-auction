@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Products</title>
+    <!-- Add Bootstrap CSS link here -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<header>
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert {% if message.tags == 'error' %}alert-danger{% endif %}
+                    {% if message.tags == 'success' %}alert-success{% endif %}
+                    {% if message.tags == 'info' %}alert-info{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+</header>
+<body>
+
+<div class="container mt-5 mb-5">
+
+    <div class="row d-flex justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card">
+
+
+                <div class="text-left logo p-2 px-5">
+
+                    <img src="https://i.imgur.com/2zDU056.png" width="50">
+
+
+                </div>
+
+                <div class="invoice p-5">
+
+                    <h5>Your order Confirmed!</h5>
+
+                    <span class="font-weight-bold d-block mt-4">Hello, {{ user.first_name }}</span>
+                    <span>You order has been confirmed and will be shipped in next two days!</span>
+
+                    <div class="payment border-top mt-3 mb-3 border-bottom table-responsive">
+
+                        <table class="table table-borderless">
+
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <div class="py-2">
+
+                                        <span class="d-block text-muted">Order Date</span>
+                                        <span>12 Jan,2018</span>
+
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="py-2">
+
+                                        <span class="d-block text-muted">Order No</span>
+                                        <span>MT12332345</span>
+
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="py-2">
+
+                                        <span class="d-block text-muted">Payment</span>
+                                        <span><img src="https://img.icons8.com/color/48/000000/mastercard.png"
+                                                   width="20"/></span>
+
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="py-2">
+
+                                        <span class="d-block text-muted">Shiping Address</span>
+                                        <span>{{ user.house }},{{ user.zip_code }},{{ user.street}},{{ user.city}},{{ user.state }}</span>
+
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+
+                        </table>
+
+
+                    </div>
+
+
+                    <div class="product border-bottom table-responsive">
+
+                        <table class="table table-borderless">
+
+                            <tbody>
+                            {% for cart in cart_items %}
+                            <tr>
+                                <td width="20%">
+
+                                    <img src="{{cart.product.image.url}}" width="90">
+
+                                </td>
+
+                                <td width="60%">
+                                    <span class="font-weight-bold">{{cart.product.title}}</span>
+                                    <div class="product-qty">
+                                        <span class="d-block">Quantity:{{cart.product.quantity}}</span>
+                                        <span>Description:{{ cart.product.description|truncatewords:4 }}</span>
+
+                                    </div>
+                                </td>
+                                <td width="20%">
+                                    <div class="text-right">
+                                        <span class="font-weight-bold">${{cart.product.price}}</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+
+                    </div>
+
+
+                    <div class="row d-flex justify-content-end">
+
+                        <div class="col-md-5">
+
+                            <table class="table table-borderless">
+
+                                <tbody class="totals">
+
+                                <tr>
+                                    <td>
+                                        <div class="text-left">
+
+                                            <span class="text-muted">Subtotal</span>
+
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="text-right">
+                                            <span>${{total_cost}}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>
+                                        <div class="text-left">
+
+                                            <span class="text-muted">Shipping Fee</span>
+
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="text-right">
+                                            <span>$0.00</span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>
+                                        <div class="text-left">
+
+                                            <span class="text-muted">Tax Fee</span>
+
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="text-right">
+                                            <span>$0.00</span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>
+                                        <div class="text-left">
+
+                                            <span class="text-muted">Discount</span>
+
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="text-right">
+                                            <span class="text-success">$0.00</span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+
+                                <tr class="border-top border-bottom">
+                                    <td>
+                                        <div class="text-left">
+
+                                            <span class="font-weight-bold">Subtotal</span>
+
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="text-right">
+                                            <span class="font-weight-bold">${{total_cost_with_shipping}}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <p>We will be sending shipping confirmation email when the item shipped successfully!</p>
+                    <p>Download your invoice <a href="{% url 'order_product:generate_invoice_pdf' %}" >here </a> </p>
+                    <p class="font-weight-bold mb-0">Thanks for shopping with us!</p>
+                    <span>Nike Team</span>
+
+
+                </div>
+
+
+                <div class="d-flex justify-content-between footer p-3">
+
+                    <span>Need Help? visit our <a href="#"> help center</a></span>
+                    <span>12 June, 2020</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+<!-- Add Bootstrap JS and jQuery scripts here (if needed) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{% extends 'chat/base.html' %}
+
+{% block title %}Login Form{% endblock %}
+{% block subtitle %}
+  <p>Users: alex, jacob, alamin</p>
+  <p>Password: admin123</p>
+{% endblock %}
+{% block content %}
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+  </form>
+{% endblock %}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Product</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="mb-4">Update Product</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <form enctype="multipart/form-data" method="post">
+                        {% csrf_token %}
+                        {% if updating %}
+                            <!-- Hidden input to indicate an update -->
+                            <input name="updating" type="hidden" value="True">
+                        {% endif %}
+
+                        <!-- Common form fields for both add and update -->
+                        <div class="form-group">
+                            <label for="{{ form.title.id_for_label }}">Title:</label>
+                            {{ form.title }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.description.id_for_label }}">Description:</label>
+                            {{ form.description }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.price.id_for_label }}">Price:</label>
+                            {{ form.price }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.image.id_for_label }}">Image:</label>
+                            {{ form.image }}
+                        </div>
+
+                        <!-- Conditionally render additional fields for update -->
+                        {% if updating %}
+                            <div class="form-group">
+                                <label for="{{ form.slug.id_for_label }}">Slug:</label>
+                                {{ form.slug }}
+                            </div>
+                        {% endif %}
+
+                        <button type="submit" class="btn btn-primary">
+                            {% if updating %}Update Product{% else %}Update Product{% endif %}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Bootstrap JS and jQuery (optional) for enhanced functionality -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
