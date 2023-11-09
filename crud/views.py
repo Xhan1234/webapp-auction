@@ -123,8 +123,5 @@ def product_detail(request, product_slug):
     # Pass the product title to the context
     product_title = product.title
     product_id = product.id
-
-
-
     return render(request, 'temp-files/product-model/index.html', {'product': product, 'product_title': product_title, 'product_id': product_id})
 

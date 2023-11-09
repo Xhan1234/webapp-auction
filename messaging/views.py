@@ -10,25 +10,48 @@ from django.http import HttpResponseRedirect
 
 
 # Create your views here.
+
 @login_required(login_url='/log-in/')
 def index(request):
-
-    inbox = 'Inbox'
-    outbox = 'Onbox'
-
-    # Retrieve messages where the current user is either the sender or the recipient
+    # Retrieve all messages (inbox and outbox) for the current user, ordered by the latest message.
     messages = Message.objects.filter(Q(sender=request.user) | Q(recipient=request.user)).order_by('-created_at')
 
     return render(request, 'chat/index.html', {
-        'inbox': inbox,
-        'outbox': outbox,
         'messages': messages,
-
     })
 
 
 @login_required(login_url='/log-in/')
-def send_message(request, author_id, product_title):
+def inbox(request):
+    inbox = 'Inbox'
+    outbox = 'Outbox'
+
+    # Retrieve messages where the current user is either the sender or the recipient
+    messages = Message.objects.filter(Q(sender=request.user) | Q(recipient=request.user)).order_by('-created_at')
+
+    # Create a list of product titles corresponding to each message
+    product_titles = [message.product_title for message in messages]
+
+    return render(request, 'chat/inbox.html', {
+        'inbox': inbox,
+        'outbox': outbox,
+        'messages': messages,
+        'product_titles': product_titles  # Pass the list of product titles to the context
+    })
+
+
+@login_required(login_url='/log-in/')
+def outbox(request):
+    # Retrieve messages sent by the current user
+    sent_messages = Message.objects.filter(sender=request.user).order_by('-created_at')
+
+    return render(request, 'chat/outbox.html', {
+        'sent_messages': sent_messages,
+    })
+
+
+@login_required(login_url='/log-in/')
+def send_message(request, author_id, product_title, product_id):
     author = get_object_or_404(UserProfile, id=author_id)
     author_username = author.username
 
@@ -62,7 +85,10 @@ def send_message(request, author_id, product_title):
         'title': 'Send Message',
         'form': form,
         'author_username': author_username,
-        'product_title': product_title
+        'product_title': product_title,
+        'product_id': product_id,
+
+
     })
 
 
@@ -78,10 +104,7 @@ def read_message(request, chat_id):
     # Check if the user is a participant in this chat
     can_reply = chats.participants.filter(id=request.user.id).exists()
 
-    print(f"can_reply: {can_reply}")
-    print(f"chats: {chats}")
-    print(f"chats.participants: {chats.participants.all()}")
-    print(f"request.user: {request.user}")
+
     participants = chats.participants.all()
     if request.user not in participants:
         # If the user is not a participant, handle it accordingly
@@ -99,8 +122,6 @@ def read_message(request, chat_id):
         messages = chats.message_set.all().order_by('created_at')
         replies = Reply.objects.filter(message=messages.first()).order_by('created_at')
 
-    print(f"messages: {messages}")
-    print(f"replies: {replies}")
 
     if request.method == 'POST':
         form = ReplyForm(request.POST)

@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'order_product',
     'django_extensions',
     'messaging',
-    'debug_toolbar',
+    'widget_tweaks',
+
 
 ]
 
@@ -64,7 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
 
 ]
 INTERNAL_IPS = [
